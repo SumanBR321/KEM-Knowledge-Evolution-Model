@@ -12,6 +12,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // Step 9: Listen for keyboard shortcuts
 chrome.commands.onCommand.addListener((command) => {
+  console.log("Command triggered:", command);
   if (command === "save_page") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) return;
