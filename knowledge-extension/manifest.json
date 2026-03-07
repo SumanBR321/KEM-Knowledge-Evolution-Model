@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Knowledge Memory",
+  "version": "1.0",
+  "description": "Captures webpage content for Knowledge Memory.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "save_page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Save page to Knowledge Memory"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
