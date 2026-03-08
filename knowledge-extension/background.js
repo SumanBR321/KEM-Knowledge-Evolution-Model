@@ -3,6 +3,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Can be used later for data storage pipeline
   if (message.action === "extraction_result") {
     console.log("Knowledge Memory - Background script received:", message.data);
+
+    // Send extracted data to our local server to print in the VS Code terminal
+    fetch('http://localhost:3000', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(message.data)
+    }).catch(err => console.error("Local server is not running.", err));
+
     if (typeof Logger !== 'undefined') Logger.log(message.data);
   } else {
     console.log("Knowledge Memory - Background script received:", message);
