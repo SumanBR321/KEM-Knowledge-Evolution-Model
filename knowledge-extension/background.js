@@ -4,13 +4,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "extraction_result") {
     console.log("Knowledge Memory - Background script received:", message.data);
 
-    // Send extracted data to our local server to print in the VS Code terminal
-    fetch('http://localhost:3000', {
+    // Send extracted data to our Python backend
+    fetch('http://localhost:5000/save_page', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(message.data)
     }).catch(err => console.error("Local server is not running.", err));
-
+    
     if (typeof Logger !== 'undefined') Logger.log(message.data);
   } else {
     console.log("Knowledge Memory - Background script received:", message);
