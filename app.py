@@ -36,8 +36,9 @@ def save_page():
     if num_chunks > 0:
         print("\n--- CHUNKS PREVIEW ---")
         for chunk in processed_data['chunks']:
-            preview = chunk['text'][:100].replace('\n', ' ') + "..." if len(chunk['text']) > 100 else chunk['text']
+            preview = chunk['text'][:500] + "...\n" if len(chunk['text']) > 500 else chunk['text'] + "\n"
             print(f"[{chunk['chunk_id']}] {preview}")
+            print("-" * 50)
     
     print("=======================================\n")
     

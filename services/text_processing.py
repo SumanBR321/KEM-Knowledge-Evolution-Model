@@ -89,24 +89,25 @@ def process_page_data(data: Dict[str, Any]) -> Dict[str, Any]:
     timestamp = data.get('timestamp', '')
     
     print("\n[PROCESS] Raw text length:", len(raw_text))
+    print("Raw Data Sample:", raw_text[:500] + "...\n" if len(raw_text) > 500 else raw_text + "\n")
     
     # Step 2: Clean text
     cleaned_basic = clean_text(raw_text)
     print("\n[PROCESS] Stage 1: Basic Cleaning")
-    print("Sample:", cleaned_basic[:200] + "..." if len(cleaned_basic) > 200 else cleaned_basic)
+    print("Sample:", cleaned_basic[:500] + "...\n" if len(cleaned_basic) > 500 else cleaned_basic + "\n")
     print("Length:", len(cleaned_basic))
     
     # Step 3: Remove boilerplate
     document_text = remove_boilerplate(cleaned_basic)
     print("\n[PROCESS] Stage 2: Boilerplate Removal")
-    print("Sample:", document_text[:200] + "..." if len(document_text) > 200 else document_text)
+    print("Sample:", document_text[:500] + "...\n" if len(document_text) > 500 else document_text + "\n")
     print("Length:", len(document_text))
     
     # Step 5 & 6: Split into semantic chunks
     chunks = chunk_document(document_text, url, timestamp)
     print("\n[PROCESS] Stage 3: Semantic Chunking")
     if chunks:
-        print("First chunk sample:", chunks[0]['text'][:200] + "..." if len(chunks[0]['text']) > 200 else chunks[0]['text'])
+        print("First chunk sample:", chunks[0]['text'][:500] + "...\n" if len(chunks[0]['text']) > 500 else chunks[0]['text'] + "\n")
     print("Total chunks created:", len(chunks))
     
     # Step 7: Create Final Output Structure
