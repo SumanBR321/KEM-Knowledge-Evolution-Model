@@ -33,7 +33,7 @@ const server = http.createServer((req, res) => {
                 console.log(`Title: ${data.title}`);
                 console.log(`URL:   ${data.url}`);
                 console.log(`Time:  ${data.timestamp}`);
-                console.log('\n Extracted Content:\n');
+                console.log('\nExtracted Content:\n');
                 console.log(data.content);
                 console.log('\n=======================================\n');
             } catch (err) {
@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`\n✅ Local logging server is running!`);
+    console.log(`\nLocal logging server is running!`);
     console.log(`Listening for Chrome Extension extractions on http://localhost:${PORT}`);
     console.log(`Waiting for data...\n`);
 });
