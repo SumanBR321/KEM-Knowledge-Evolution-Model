@@ -106,6 +106,7 @@ def process_page_data(data: Dict[str, Any]) -> Dict[str, Any]:
     # Step 5 & 6: Split into semantic chunks
     chunks = chunk_document(document_text, url, timestamp)
     print("\n[PROCESS] Stage 3: Semantic Chunking")
+    # print("Length:", len('text'))
     if chunks:
         print("First chunk sample:", chunks[0]['text'][:500] + "...\n" if len(chunks[0]['text']) > 500 else chunks[0]['text'] + "\n")
     print("Total chunks created:", len(chunks))

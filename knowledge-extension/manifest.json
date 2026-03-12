@@ -15,7 +15,7 @@
   },
   "commands": {
     "save_page": {
-      "suggested_key": {
+      "suggested_key": {  
         "default": "Ctrl+Shift+S",
         "mac": "Command+Shift+S"
       },
