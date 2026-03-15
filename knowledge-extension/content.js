@@ -2,23 +2,13 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "request_extraction") {
     
-    let contentText = "";
-    const articleElement = document.querySelector("article");
-    
-    if (articleElement) {
-      contentText = articleElement.innerText;
-    } else {
-      contentText = document.body.innerText;
-    }
-    
-    // Basic cleanup: remove excessive whitespace
-    contentText = contentText.replace(/\s+/g, ' ').trim();
+    let contentHtml = document.body.innerHTML;
     
     const pageData = {
       title: document.title,
       url: window.location.href,
       timestamp: new Date().toISOString(),
-      content: contentText
+      content: contentHtml
     };
     
     console.log("Knowledge Memory - Extracted Data:", pageData);
