@@ -3,6 +3,13 @@ from typing import Dict, Any, List
 from bs4 import BeautifulSoup, Comment
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+TEXT_DENSITY_THRESHOLD = 25
+LINK_DENSITY_THRESHOLD = 0.3
+MIN_WORD_COUNT = 10
+TK_SCORE_BOOST = 1.5
+CHUNK_SIZE = 450
+CHUNK_OVERLAP = 50
+
 def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
     """
     Advanced research-based text cleaning pipeline (TTR, ATTR, TKD).
@@ -34,9 +41,14 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
     
     blocks = []
     # Segment into potential content blocks
-    potential_tags = ['p', 'div', 'article', 'section', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+    block_tags = {'p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
+    container_tags = {'div', 'article', 'section'}
+    all_target_tags = block_tags | container_tags
     
-    for element in soup.find_all(potential_tags):
+    for element in soup.find_all(all_target_tags):
+        if element.name in container_tags and element.find(list(block_tags)):
+            continue
+            
         # Avoid nested scoring: if a block is mostly contained within another already processed block, skip?
         # For simplicity in real-time, we'll process all and merge later.
         
@@ -64,12 +76,12 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
         
         # --- Step 4: Threshold Rules ---
         # Research thresholds: TD > 30, LD < 0.2, TKD >= 1
-        if text_density > 25 and link_density < 0.3:
+        if text_density > TEXT_DENSITY_THRESHOLD and link_density < LINK_DENSITY_THRESHOLD:
             # We are slightly more lenient than the user suggested for variety
             # But we check the TKD as a boost
             score = text_density * (1 - link_density)
             if tk_count > 0:
-                score *= 1.5
+                score *= TK_SCORE_BOOST
                 
             blocks.append({
                 "text": text,
@@ -90,7 +102,7 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
         # Word count check (> 30 words is ideal, but let's be realistic for headers etc)
         word_count = len(clean_s.split())
         
-        if word_count < 10: # More lenient for semantic flow
+        if word_count < MIN_WORD_COUNT: # More lenient for semantic flow
             continue
             
         if clean_s in unique_text:
@@ -124,8 +136,8 @@ def chunk_document(document_text: str, source_url: str, timestamp: str) -> List[
         return len(text.split())
         
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=450,
-        chunk_overlap=50,
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
         length_function=word_length,
         separators=["\n\n", "\n", ". ", " ", ""]
     )
@@ -171,5 +183,6 @@ def process_page_data(data: Dict[str, Any]) -> Dict[str, Any]:
         "timestamp": timestamp,
         "document_text": clean_text,
         "word_count": word_count,
-        "chunks": chunks
+        "chunks": chunks,
+        "document_embedding": None
     }
