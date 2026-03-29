@@ -1,54 +1,60 @@
-// Step 5 & 6: Content extraction and cleaning
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "request_extraction") {
-    
-    let contentHtml = document.body.innerHTML;
-    
-    const pageData = {
-      title: document.title,
-      url: window.location.href,
-      timestamp: new Date().toISOString(),
-      content: contentHtml
-    };
-    
-    console.log("Knowledge Memory - Extracted Data:", pageData);
-    
-    // Step 8: Send Data Back to Popup or Background
-    chrome.runtime.sendMessage({ action: "extraction_result", data: pageData });
+if (window.__KEM_INJECTED__) {
+    // Already injected, do nothing
+} else {
+    window.__KEM_INJECTED__ = true;
 
-    // Automatic popup (toast) acknowledgment when successfully saved
-    showAcknowledgmentPopup();
-  }
-});
+    // Step 5 & 6: Content extraction and cleaning
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (request.action === "request_extraction") {
+        
+        let contentHtml = document.body.innerHTML;
+        
+        const pageData = {
+          title: document.title,
+          url: window.location.href,
+          timestamp: new Date().toISOString(),
+          content: contentHtml
+        };
+        
+        console.log("Knowledge Memory - Extracted Data:", pageData);
+        
+        // Step 8: Send Data Back to Popup or Background
+        chrome.runtime.sendMessage({ action: "extraction_result", data: pageData });
 
-function showAcknowledgmentPopup() {
-  // Remove if one already exists
-  const existing = document.getElementById("knowledge-memory-popup");
-  if (existing) existing.remove();
+        // Automatic popup (toast) acknowledgment when successfully saved
+        showAcknowledgmentPopup();
+      }
+    });
 
-  const popup = document.createElement("div");
-  popup.id = "knowledge-memory-popup";
-  popup.innerText = "Page successfully saved to Knowledge Memory!";
-  popup.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    z-index: 999999;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: opacity 0.5s ease;
-  `;
-  
-  document.body.appendChild(popup);
+    function showAcknowledgmentPopup() {
+      // Remove if one already exists
+      const existing = document.getElementById("knowledge-memory-popup");
+      if (existing) existing.remove();
 
-  // Fade out and remove after 3 seconds
-  setTimeout(() => {
-    popup.style.opacity = "0";
-    setTimeout(() => popup.remove(), 500);
-  }, 3000);
+      const popup = document.createElement("div");
+      popup.id = "knowledge-memory-popup";
+      popup.innerText = "Page successfully saved to Knowledge Memory!";
+      popup.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        z-index: 999999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: opacity 0.5s ease;
+      `;
+      
+      document.body.appendChild(popup);
+
+      // Fade out and remove after 3 seconds
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.remove(), 500);
+      }, 3000);
+    }
 }

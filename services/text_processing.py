@@ -3,8 +3,8 @@ from typing import Dict, Any, List
 from bs4 import BeautifulSoup, Comment
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-TEXT_DENSITY_THRESHOLD = 25
-LINK_DENSITY_THRESHOLD = 0.3
+TEXT_DENSITY_THRESHOLD = 8
+LINK_DENSITY_THRESHOLD = 0.5
 MIN_WORD_COUNT = 10
 TK_SCORE_BOOST = 1.5
 CHUNK_SIZE = 450
@@ -76,13 +76,13 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
         
         # --- Step 4: Threshold Rules ---
         # Research thresholds: TD > 30, LD < 0.2, TKD >= 1
-        if text_density > TEXT_DENSITY_THRESHOLD and link_density < LINK_DENSITY_THRESHOLD:
-            # We are slightly more lenient than the user suggested for variety
-            # But we check the TKD as a boost
+        if text_density > TEXT_DENSITY_THRESHOLD:
             score = text_density * (1 - link_density)
+            if link_density > LINK_DENSITY_THRESHOLD:
+                score *= 0.5
             if tk_count > 0:
                 score *= TK_SCORE_BOOST
-                
+
             blocks.append({
                 "text": text,
                 "score": score,
