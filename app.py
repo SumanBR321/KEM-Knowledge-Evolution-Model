@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.text_processing import process_page_data
+from services.embedding_service import embed_document
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
@@ -17,6 +18,7 @@ def save_page():
     
     # Run preprocessing pipeline
     processed_data = process_page_data(data)
+    processed_data = embed_document(processed_data)
     
     cleaned_text_length = len(processed_data['document_text'])
     num_chunks = len(processed_data['chunks'])
@@ -32,6 +34,7 @@ def save_page():
     print(f"Received page content length: {input_text_length} characters")
     print(f"Cleaned text length: {cleaned_text_length} characters")
     print(f"Chunks created: {num_chunks}")
+    print(f"Embeddings generated: document + {num_chunks} chunk embeddings")
     
     if num_chunks > 0:
         print("\n--- CHUNKS PREVIEW ---")

@@ -4,3 +4,4 @@ langchain-text-splitters
 langchain-community
 beautifulsoup4
 lxml
+sentence-transformers

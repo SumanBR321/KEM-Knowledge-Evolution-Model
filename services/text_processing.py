@@ -150,7 +150,8 @@ def chunk_document(document_text: str, source_url: str, timestamp: str) -> List[
             "chunk_id": f"chunk_{i+1}",
             "text": ct.strip(),
             "url": source_url,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            "embedding": None
         })
         
     return chunks
