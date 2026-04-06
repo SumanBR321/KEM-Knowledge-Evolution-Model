@@ -58,5 +58,20 @@ def embed_document(processed_data: Dict) -> Dict:
     # Print progress
     title = processed_data.get("title", "Unknown")
     print(f"[EMBED] Generated document embedding + {len(chunks)} chunk embeddings for: {title}")
-    
+
+    # Print document embedding preview
+    doc_emb = processed_data.get("document_embedding")
+    if doc_emb:
+        print(f"\n--- DOCUMENT EMBEDDING (dim={len(doc_emb)}) ---")
+        print(f"  [{', '.join(f'{v:.6f}' for v in doc_emb[:8])} ...]")
+
+    # Print chunk embeddings preview
+    if chunks:
+        print(f"\n--- CHUNK EMBEDDINGS ---")
+        for chunk in chunks:
+            emb = chunk.get("embedding", [])
+            if emb:
+                print(f"  [{chunk['chunk_id']}] dim={len(emb)} | [{', '.join(f'{v:.6f}' for v in emb[:8])} ...]")
+    print("")
+
     return processed_data

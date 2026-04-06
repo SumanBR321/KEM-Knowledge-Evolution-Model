@@ -25,6 +25,10 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
         'footer', 'nav', 'form', 'aside', 'header'
     ]
     for tag in soup.find_all(useless_tags):
+        # Safeguard: Do not decompose structural tags if they contain semantic content wrappers
+        if tag.name in {'header', 'footer', 'aside', 'nav'}:
+            if tag.find(['article', 'main']):
+                continue
         tag.decompose()
 
     # Remove comments
@@ -42,12 +46,20 @@ def extract_main_content(html_content: str, title: str) -> Dict[str, Any]:
     blocks = []
     # Segment into potential content blocks
     block_tags = {'p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
-    container_tags = {'div', 'article', 'section'}
-    all_target_tags = block_tags | container_tags
+    container_tags = {'div', 'section'}
+    semantic_content_tags = {'article', 'main'}
+    all_target_tags = block_tags | container_tags | semantic_content_tags
     
     for element in soup.find_all(all_target_tags):
         if element.name in container_tags and element.find(list(block_tags)):
             continue
+        if element.name in semantic_content_tags:
+            # article and main are semantic content wrappers.
+            # Only skip them if they contain other article/main tags inside
+            # (meaning we are a parent of another semantic content block).
+            # Otherwise score them as a whole content unit.
+            if element.find(list(semantic_content_tags)):
+                continue
             
         # Avoid nested scoring: if a block is mostly contained within another already processed block, skip?
         # For simplicity in real-time, we'll process all and merge later.
