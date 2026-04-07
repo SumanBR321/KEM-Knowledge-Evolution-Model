@@ -3,6 +3,7 @@ from flask_cors import CORS
 from services.text_processing import process_page_data
 from services.embedding_service import embed_document
 from services.vector_store import save_page as store_page
+from services.clustering_service import cluster_documents, get_reinforced_concepts
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
@@ -55,6 +56,18 @@ def save_page():
         "document_id": store_result.get("document_id"),
         "data": processed_data
     })
+
+@app.route('/get_clusters', methods=['GET'])
+def get_clusters():
+    """Returns concept clusters from all saved documents."""
+    result = cluster_documents()
+    return jsonify(result)
+
+@app.route('/get_reinforced_concepts', methods=['GET'])
+def reinforced_concepts():
+    """Returns the most reinforced concept cluster."""
+    result = get_reinforced_concepts()
+    return jsonify(result)
 
 if __name__ == '__main__':
     print("Starting Knowledge Memory Backend on http://localhost:5000")
