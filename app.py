@@ -4,6 +4,7 @@ from services.text_processing import process_page_data
 from services.embedding_service import embed_document
 from services.vector_store import save_page as store_page
 from services.clustering_service import cluster_documents, get_reinforced_concepts
+from services.topic_drift_service import detect_topic_drift
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
@@ -67,6 +68,12 @@ def get_clusters():
 def reinforced_concepts():
     """Returns the most reinforced concept cluster."""
     result = get_reinforced_concepts()
+    return jsonify(result)
+
+@app.route('/get_topic_drift', methods=['GET'])
+def topic_drift():
+    """Returns temporal knowledge drift analysis across weekly windows."""
+    result = detect_topic_drift()
     return jsonify(result)
 
 if __name__ == '__main__':
