@@ -43,8 +43,13 @@ def embed_document(processed_data: Dict) -> Dict:
     document_text = processed_data.get("document_text", "")
     
     # Generate document embedding
-    if document_text:
-        processed_data["document_embedding"] = generate_embedding(document_text)
+    # Generate document embedding from a title-prefixed summary representation
+    # This ensures document embedding is always distinct from chunk embeddings
+    # by creating a high-level semantic signature of the page
+    title = processed_data.get("title", "")
+    words = document_text.split()
+    summary_text = f"{title}. {' '.join(words[:256])}"
+    processed_data["document_embedding"] = generate_embedding(summary_text)
     
     # Generate chunk embeddings in a single batch
     chunks = processed_data.get("chunks", [])

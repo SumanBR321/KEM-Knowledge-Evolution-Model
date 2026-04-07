@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.text_processing import process_page_data
 from services.embedding_service import embed_document
+from services.vector_store import save_page as store_page
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
@@ -19,6 +20,8 @@ def save_page():
     # Run preprocessing pipeline
     processed_data = process_page_data(data)
     processed_data = embed_document(processed_data)
+    store_result = store_page(processed_data)
+    print(f"[STORE] Status: {store_result['status']} | Document ID: {store_result.get('document_id', 'N/A')[:8]}...")
     
     cleaned_text_length = len(processed_data['document_text'])
     num_chunks = len(processed_data['chunks'])
@@ -49,6 +52,7 @@ def save_page():
     return jsonify({
         "status": "processed",
         "chunks_created": num_chunks,
+        "document_id": store_result.get("document_id"),
         "data": processed_data
     })
 

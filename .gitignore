@@ -22,5 +22,9 @@ Thumbs.db
 *.log
 
 # Verification Scripts
+# Verification Scripts
 verify_*.py
+
+# Databases
+chroma_db/
 
