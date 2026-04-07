@@ -169,8 +169,12 @@ def detect_topic_drift() -> Dict[str, Any]:
 
     result = documents_collection.get(include=["embeddings", "metadatas"])
 
-    embeddings = result.get("embeddings") or []
-    metadatas  = result.get("metadatas")  or []
+    embeddings = result.get("embeddings")
+    metadatas  = result.get("metadatas")
+
+    if embeddings is None: embeddings = []
+    if metadatas is None: metadatas = []
+
     total_docs = len(embeddings)
 
     # --- Guard: need at least 2 documents ---
