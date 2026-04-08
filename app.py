@@ -5,6 +5,7 @@ from services.embedding_service import embed_document
 from services.vector_store import save_page as store_page
 from services.clustering_service import cluster_documents, get_reinforced_concepts
 from services.topic_drift_service import detect_topic_drift
+from services.rag_service import query_knowledge
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
@@ -74,6 +75,17 @@ def reinforced_concepts():
 def topic_drift():
     """Returns temporal knowledge drift analysis across weekly windows."""
     result = detect_topic_drift()
+    return jsonify(result)
+
+@app.route('/query', methods=['POST'])
+def query():
+    """Queries saved knowledge and returns grounded answers."""
+    data = request.json
+    if not data or 'query' not in data:
+        return jsonify({"error": "Invalid input, 'query' required"}), 400
+        
+    user_query = data['query']
+    result = query_knowledge(user_query)
     return jsonify(result)
 
 if __name__ == '__main__':

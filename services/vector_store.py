@@ -181,6 +181,7 @@ def search_similar(
             "timestamp":   meta.get("timestamp", ""),
             "document_id": meta.get("document_id", ""),
             "distance":    dist,
+            "score":       1.0 - dist  # Include score for hybrid retrieval
         })
 
     return formatted
