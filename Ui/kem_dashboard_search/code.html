@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KEM — Search</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffba44",
+                    "on-secondary": "#3d2066",
+                    "surface-tint": "#c9bfff",
+                    "on-surface-variant": "#c9c4d4",
+                    "primary": "#c9bfff",
+                    "on-primary-fixed-variant": "#473698",
+                    "surface-container-high": "#2a2933",
+                    "surface-container-lowest": "#0e0d16",
+                    "primary-fixed-dim": "#c9bfff",
+                    "on-secondary-container": "#caaaf9",
+                    "primary-fixed": "#e5deff",
+                    "on-secondary-fixed": "#270550",
+                    "surface-container-highest": "#35333e",
+                    "inverse-primary": "#5f4fb2",
+                    "error-container": "#93000a",
+                    "surface-dim": "#13121b",
+                    "on-tertiary-container": "#e09a00",
+                    "on-surface": "#e5e0ee",
+                    "on-primary-container": "#aa9bff",
+                    "on-tertiary-fixed": "#281800",
+                    "surface-variant": "#35333e",
+                    "on-primary-fixed": "#1a0063",
+                    "surface-container-low": "#1c1a24",
+                    "tertiary-fixed-dim": "#ffba44",
+                    "on-secondary-fixed-variant": "#54387e",
+                    "on-tertiary-fixed-variant": "#614000",
+                    "secondary": "#d6baff",
+                    "primary-container": "#3d2b8e",
+                    "surface-container": "#201e28",
+                    "secondary-fixed-dim": "#d6baff",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#573a81",
+                    "outline": "#938f9d",
+                    "error": "#ffb4ab",
+                    "background": "#13121b",
+                    "on-primary": "#301b81",
+                    "outline-variant": "#484552",
+                    "surface": "#13121b",
+                    "on-tertiary": "#442c00",
+                    "on-error": "#690005",
+                    "on-background": "#e5e0ee",
+                    "surface-bright": "#3a3842",
+                    "secondary-fixed": "#ecdcff",
+                    "inverse-on-surface": "#312f39",
+                    "tertiary-container": "#543700",
+                    "tertiary-fixed": "#ffddaf",
+                    "inverse-surface": "#e5e0ee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #13121b;
+        color: #e5e0ee;
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        font-size: 20px;
+      }
+      .glass-effect {
+        backdrop-filter: blur(16px);
+        background: rgba(53, 51, 62, 0.6);
+      }
+      .shimmer-accent {
+        position: relative;
+        overflow: hidden;
+      }
+      .shimmer-accent::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20%;
+        height: 60%;
+        width: 2px;
+        background: #ffba44;
+        box-shadow: 0 0 8px #ffba44;
+      }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- SIDEBAR NAVIGATION -->
+<aside class="h-screen w-[400px] border-r border-white/5 bg-slate-900/80 flex flex-col py-6 font-['Inter'] text-sm tracking-normal transition-all duration-300 ease-out">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-indigo-400" data-icon="hub">hub</span>
+</div>
+<h1 class="text-lg font-black text-white">Cognitive Sanctuary</h1>
+</div>
+<p class="text-slate-500 text-xs uppercase tracking-widest font-semibold">Knowledge Engine</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<!-- Dashboard Tab (Inactive) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<!-- Timeline Tab (Inactive) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="timeline">timeline</span>
+<span class="font-medium">Timeline</span>
+</a>
+<!-- Search Tab (ACTIVE) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-indigo-400 border-r-2 border-indigo-400 bg-indigo-500/10 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-medium">Search</span>
+</a>
+<!-- Insights Tab (Inactive) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-medium">Insights</span>
+</a>
+<!-- Ask AI Tab (Inactive) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-medium">Ask AI</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold shadow-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Capture Idea
+            </button>
+<div class="mt-6 pt-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT CANVAS -->
+<main class="flex-1 h-screen overflow-y-auto bg-surface-container-lowest p-12">
+<div class="max-w-4xl mx-auto">
+<!-- HEADER SECTION -->
+<header class="mb-12">
+<h2 class="text-display-sm font-headline font-extrabold text-on-surface tracking-tight mb-2 text-4xl">Semantic Engine</h2>
+<p class="text-body-sm text-on-surface-variant max-w-lg">Retrieve neural patterns and connected nodes across your entire cognitive vault using natural language.</p>
+</header>
+<!-- SEARCH INPUT CONTAINER -->
+<section class="mb-16 relative">
+<div class="glass-effect rounded-2xl p-2 shadow-2xl flex items-center gap-4 border border-outline-variant/15 transition-all focus-within:ring-2 focus-within:ring-primary/20">
+<div class="pl-4 text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="search">search</span>
+</div>
+<input class="bg-transparent border-none focus:ring-0 text-xl font-body w-full text-on-surface placeholder:text-on-surface-variant/40 py-4" placeholder="What do you know about..." type="text"/>
+<div class="pr-2">
+<kbd class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant text-[10px] font-bold tracking-widest uppercase border border-outline-variant/20">Enter</kbd>
+</div>
+</div>
+<div class="mt-4 flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-label-md text-secondary border border-outline-variant/10 text-xs flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        All Nodes
+                    </span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors text-xs border border-outline-variant/5">Timeline</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors text-xs border border-outline-variant/5">External Sources</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors text-xs border border-outline-variant/5">PDF Annotations</span>
+</div>
+</section>
+<!-- SEARCH RESULTS AREA -->
+<section class="space-y-6">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Neural Matches (24)</h3>
+<div class="h-px flex-1 mx-6 bg-outline-variant/10"></div>
+</div>
+<!-- Result Card 1 (AI Insight Focus) -->
+<article class="shimmer-accent bg-surface-container rounded-2xl p-6 transition-all hover:translate-x-1 group">
+<div class="flex items-start justify-between mb-4">
+<div class="space-y-1">
+<span class="text-[10px] text-tertiary font-bold uppercase tracking-widest">AI Breakthrough</span>
+<h4 class="text-xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors">The Architecture of Flow States in Digital Environments</h4>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="text-[10px] text-on-surface-variant uppercase font-medium">98% Match</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[98%] shadow-[0_0_8px_rgba(255,186,68,0.5)]"></div>
+</div>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                        An analysis of how minimalist UI design directly correlates with reduced cortisol levels during intense information gathering sessions. Connection found between "Deep Work" nodes and "Cognitive Sanctuary" conceptual frameworks.
+                    </p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-3">
+<img alt="Node source avatar" class="w-5 h-5 rounded-md" data-alt="minimalist geometric abstract icon representing a knowledge node in soft indigo tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClFt1pO_vAaKHgDauMYES2DQ8skcuWdJUxsh4wwkbjLL77LztkByIr9N59PakZsQMOi9yBh0FdHZ14trp7BMBPcD_W4iX8rqGrqXAOww7PIFGa0RzYc10jnkwyNJEWay75X6jHVNy6L8PxRbtvBwg5oO07Rmtr4yTUccJmALGvglFtwXIE2ENro9aDEpt4EJaw5Ptm_FMOyNjiWaYb6jMy9sGS4MI4fvRDgxU5-m7ltOm0Ah-axx22IP_YeCSdcHvsSr7gOp9micEd"/>
+<span class="text-xs text-on-surface-variant font-medium">Internal Vault / Architecture</span>
+</div>
+<a class="text-xs text-primary font-semibold flex items-center gap-1 hover:underline" href="#">
+                            Open Node <span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
+</a>
+</div>
+</article>
+<!-- Result Card 2 -->
+<article class="bg-surface-container-low rounded-2xl p-6 transition-all hover:bg-surface-container-high group border border-outline-variant/5">
+<div class="flex items-start justify-between mb-4">
+<div class="space-y-1">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Article Snippet</span>
+<h4 class="text-xl font-headline font-bold text-on-surface">Neural Interoperability Protocol v2</h4>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="text-[10px] text-on-surface-variant uppercase font-medium">84% Match</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6 italic">
+                        "...the protocol enables seamless transfer of latent knowledge fragments across decentralized knowledge engines without losing semantic context or temporal metadata..."
+                    </p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="link">link</span>
+<span class="text-xs text-on-surface-variant font-medium truncate max-w-[200px]">papers.neurallink.io/protocol-v2</span>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-md bg-surface-container-highest text-[10px] text-on-surface-variant">System</span>
+<span class="px-2 py-0.5 rounded-md bg-surface-container-highest text-[10px] text-on-surface-variant">Tech</span>
+</div>
+</div>
+</article>
+<!-- Result Card 3 -->
+<article class="bg-surface-container-low rounded-2xl p-6 transition-all hover:bg-surface-container-high group border border-outline-variant/5">
+<div class="flex items-start justify-between mb-4">
+<div class="space-y-1">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Meeting Notes</span>
+<h4 class="text-xl font-headline font-bold text-on-surface">Weekly Synthesis: Q3 Focus Area</h4>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="text-[10px] text-on-surface-variant uppercase font-medium">72% Match</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-outline h-full w-[72%]"></div>
+</div>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                        Discussed the necessity of a "Cognitive Sanctuary" for team members. Mentioned that search should prioritize intent over keywords—leveraging semantic embeddings to find latent connections.
+                    </p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-secondary" data-icon="groups">groups</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Core Team Workspace</span>
+</div>
+<span class="text-[10px] text-on-surface-variant font-mono">July 12, 2024</span>
+</div>
+</article>
+<!-- FOOTER / EMPTY SPACE -->
+<div class="py-12 flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 rounded-full border border-outline-variant/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-outline-variant" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<p class="text-on-surface-variant text-sm">Searching deeper into the archive...</p>
+<div class="mt-4 flex gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20 animate-pulse"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse" style="animation-delay: 0.2s"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20 animate-pulse" style="animation-delay: 0.4s"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- ASYMMETRIC RIGHT PANEL (QUICK STATS) -->
+<aside class="hidden xl:flex w-80 h-screen border-l border-white/5 bg-surface-container-low flex-col p-8 space-y-8">
+<section>
+<h5 class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-6">Discovery Engine</h5>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-1 h-10 bg-primary rounded-full"></div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Index Health</p>
+<p class="text-xl font-headline font-extrabold text-on-surface">Optimized</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-1 h-10 bg-tertiary rounded-full"></div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Neural Connections</p>
+<p class="text-xl font-headline font-extrabold text-on-surface">1,402</p>
+</div>
+</div>
+</div>
+</section>
+<section class="flex-1">
+<h5 class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-6">Semantic Trends</h5>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant/10">
+<p class="text-xs font-semibold text-primary mb-1">#cognitivetools</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">Trending in your notes this week with 14 new nodes.</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container border border-outline-variant/10">
+<p class="text-xs font-semibold text-tertiary mb-1">#digitalminimalism</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">Connected 4 external papers to your "Flow State" project.</p>
+</div>
+</div>
+</section>
+<section class="mt-auto bg-surface-bright rounded-2xl p-6 border border-outline-variant/20">
+<p class="text-xs font-bold text-on-surface mb-3">AI Search Tip</p>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Try asking: "What was my initial reaction to the neural interface whitepaper last October?"</p>
+</section>
+</aside>
+</body></html>

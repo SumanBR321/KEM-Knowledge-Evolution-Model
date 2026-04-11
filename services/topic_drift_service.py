@@ -268,3 +268,69 @@ def detect_topic_drift() -> Dict[str, Any]:
             "trend":         trend,
         },
     }
+
+def detect_contradictions() -> Dict[str, Any]:
+    """
+    Detects semantic contradictions by finding highly similar text chunks
+    that originate from different source URLs. 
+    
+    The algorithm identifies pairs with cosine similarity between 0.75 and 0.92,
+    which typically indicates they cover the same specific topic but likely
+    contain conflicting assertions rather than being identical duplicates.
+    """
+    _, chunks_collection = get_collections()
+    
+    # Get all chunks with their embeddings and metadata
+    result = chunks_collection.get(include=["documents", "metadatas", "embeddings"])
+    
+    documents = result.get("documents", [])
+    metadatas = result.get("metadatas", [])
+    embeddings = result.get("embeddings", [])
+    
+    if len(documents) < 4:
+        return {
+            "status": "insufficient_data", 
+            "message": "Need more saved pages to detect contradictions"
+        }
+    
+    # Convert embeddings to numpy array
+    emb_array = np.array(embeddings)
+    
+    # Compute full cosine similarity matrix
+    sim_matrix = cosine_similarity(emb_array)
+    
+    contradictions = []
+    n = len(documents)
+    
+    # We only need the upper triangle of the matrix to avoid duplicate pairs
+    for i in range(n):
+        for j in range(i + 1, n):
+            score = sim_matrix[i][j]
+            
+            # Threshold check
+            if 0.75 <= score <= 0.92:
+                url_a = metadatas[i].get("url")
+                url_b = metadatas[j].get("url")
+                
+                # Check if they come from different URLs
+                if url_a != url_b:
+                    contradictions.append({
+                        "chunk_a_text": documents[i][:200],
+                        "chunk_b_text": documents[j][:200],
+                        "source_a": url_a,
+                        "source_b": url_b,
+                        "similarity_score": round(float(score), 4)
+                    })
+    
+    # Sort by similarity descending and take top 5
+    contradictions = sorted(
+        contradictions, 
+        key=lambda x: x["similarity_score"], 
+        reverse=True
+    )[:5]
+    
+    return {
+        "status": "success",
+        "contradiction_count": len(contradictions),
+        "contradictions": contradictions
+    }

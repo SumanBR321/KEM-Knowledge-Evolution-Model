@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.text_processing import process_page_data
@@ -9,7 +11,12 @@ from services.rag_service import query_knowledge
 
 app = Flask(__name__)
 # Enable CORS for requests from the Chrome Extension
-CORS(app)
+CORS(
+    app,
+    resources={r"/query": {"origins": "*"}},
+    methods=["POST", "OPTIONS"],
+    allow_headers=["Content-Type"]
+)
 
 @app.route('/save_page', methods=['POST'])
 def save_page():
@@ -77,15 +84,75 @@ def topic_drift():
     result = detect_topic_drift()
     return jsonify(result)
 
-@app.route('/query', methods=['POST'])
+@app.route('/query', methods=['POST', 'OPTIONS'])
 def query():
     """Queries saved knowledge and returns grounded answers."""
+    # 0. Handle CORS preflight
+    if request.method == 'OPTIONS':
+        return jsonify({"status": "ok"}), 200
+    # 1. Method validation
+    if request.method != 'POST':
+        return jsonify({
+            "status": "error",
+            "message": "Method not allowed. Use POST."
+        }), 405
+
+    # 2. Content-Type validation
+    if not request.is_json:
+        return jsonify({
+            "status": "error",
+            "message": "Content-Type must be application/json"
+        }), 400
+
+    # 3. Existing validation
     data = request.json
     if not data or 'query' not in data:
-        return jsonify({"error": "Invalid input, 'query' required"}), 400
+        return jsonify({
+            "status": "error",
+            "message": "query field required"
+        }), 400
         
-    user_query = data['query']
+    user_query = data.get('query', '').strip()
     result = query_knowledge(user_query)
+    return jsonify(result)
+
+@app.route('/get_stats', methods=['GET'])
+def get_stats():
+    """Returns high-level knowledge base statistics."""
+    from services.vector_store import get_collections
+    from services.clustering_service import cluster_documents
+    
+    documents_col, chunks_col = get_collections()
+    
+    doc_data = documents_col.get(include=["metadatas"])
+    total_docs = len(doc_data["ids"])
+    total_chunks = len(chunks_col.get()["ids"])
+    
+    recent_docs = []
+    if doc_data["metadatas"]:
+        sorted_docs = sorted(
+            zip(doc_data["ids"], doc_data["metadatas"]),
+            key=lambda x: x[1].get("timestamp", ""),
+            reverse=True
+        )
+        recent_docs = [
+            {"document_id": did[:8], "title": meta.get("title"), 
+             "url": meta.get("url"), "timestamp": meta.get("timestamp")}
+            for did, meta in sorted_docs[:5]
+        ]
+    
+    return jsonify({
+        "status": "success",
+        "total_documents": total_docs,
+        "total_chunks": total_chunks,
+        "recent_saves": recent_docs
+    })
+
+@app.route('/get_contradictions', methods=['GET'])
+def contradictions():
+    """Detects potentially conflicting information across saved pages."""
+    from services.topic_drift_service import detect_contradictions
+    result = detect_contradictions()
     return jsonify(result)
 
 if __name__ == '__main__':

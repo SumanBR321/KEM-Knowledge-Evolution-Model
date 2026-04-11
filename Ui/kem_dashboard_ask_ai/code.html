@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffba44",
+                    "on-secondary": "#3d2066",
+                    "surface-tint": "#c9bfff",
+                    "on-surface-variant": "#c9c4d4",
+                    "primary": "#c9bfff",
+                    "on-primary-fixed-variant": "#473698",
+                    "surface-container-high": "#2a2933",
+                    "surface-container-lowest": "#0e0d16",
+                    "primary-fixed-dim": "#c9bfff",
+                    "on-secondary-container": "#caaaf9",
+                    "primary-fixed": "#e5deff",
+                    "on-secondary-fixed": "#270550",
+                    "surface-container-highest": "#35333e",
+                    "inverse-primary": "#5f4fb2",
+                    "error-container": "#93000a",
+                    "surface-dim": "#13121b",
+                    "on-tertiary-container": "#e09a00",
+                    "on-surface": "#e5e0ee",
+                    "on-primary-container": "#aa9bff",
+                    "on-tertiary-fixed": "#281800",
+                    "surface-variant": "#35333e",
+                    "on-primary-fixed": "#1a0063",
+                    "surface-container-low": "#1c1a24",
+                    "tertiary-fixed-dim": "#ffba44",
+                    "on-secondary-fixed-variant": "#54387e",
+                    "on-tertiary-fixed-variant": "#614000",
+                    "secondary": "#d6baff",
+                    "primary-container": "#3d2b8e",
+                    "surface-container": "#201e28",
+                    "secondary-fixed-dim": "#d6baff",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#573a81",
+                    "outline": "#938f9d",
+                    "error": "#ffb4ab",
+                    "background": "#13121b",
+                    "on-primary": "#301b81",
+                    "outline-variant": "#484552",
+                    "surface": "#13121b",
+                    "on-tertiary": "#442c00",
+                    "on-error": "#690005",
+                    "on-background": "#e5e0ee",
+                    "surface-bright": "#3a3842",
+                    "secondary-fixed": "#ecdcff",
+                    "inverse-on-surface": "#312f39",
+                    "tertiary-container": "#543700",
+                    "tertiary-fixed": "#ffddaf",
+                    "inverse-surface": "#e5e0ee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .shimmer-accent {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-accent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ffba44;
+            box-shadow: 0 0 10px #ffba44;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-[400px] border-r border-white/5 bg-slate-900/80 flex flex-col py-6 shrink-0 transition-all duration-300 ease-out font-['Inter'] text-sm tracking-normal">
+<!-- Header Section -->
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<h1 class="text-lg font-black text-white uppercase tracking-wider">Cognitive Sanctuary</h1>
+</div>
+<p class="text-slate-500 text-xs font-medium tracking-widest uppercase">Knowledge Engine</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-1 px-4">
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all duration-300 rounded-xl group" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all duration-300 rounded-xl group" href="#">
+<span class="material-symbols-outlined" data-icon="timeline">timeline</span>
+<span class="font-medium">Timeline</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all duration-300 rounded-xl group" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-medium">Search</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all duration-300 rounded-xl group" href="#">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-medium">Insights</span>
+</a>
+<!-- Active Tab: Ask AI -->
+<a class="flex items-center gap-4 px-4 py-3 text-indigo-400 border-r-2 border-indigo-400 bg-indigo-500/10 transition-all duration-300 rounded-l-xl" href="#">
+<span class="material-symbols-outlined" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="font-bold">Ask AI</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="px-6 my-6">
+<button class="w-full py-4 px-6 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/10 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                    Capture Idea
+                </button>
+</div>
+<!-- Footer -->
+<div class="mt-auto px-4 border-t border-white/5 pt-6">
+<a class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+<div class="mt-6 flex items-center gap-3 px-4">
+<img alt="User profile avatar" class="w-8 h-8 rounded-full bg-surface-container-highest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7kgnWOWzqRY5D3AIJaQiEGESf9l_Ezne5wsLRmY95-qCIz64tJJq5UCF7yomU9aIcSFac3vngINOQnr2aNcTmBoUVINw6exE96iLTprz50AVUqi3gM6XcsVgNozXtHnetWiCevYKyk9Jem7GiSDXgLFMFtik-MqWYi3euB-EUADrTx4lj7hAxeqUd8jbGHRU9y1_A-w8LaPst0z28NrYXccryuE_uaqMqxTOYZTyvRTIMbGNxraiNMJ2KGR138mA-oXwTEoUeqWmQ"/>
+<div class="flex flex-col">
+<span class="text-xs text-on-surface font-semibold">User Node 01</span>
+<span class="text-[10px] text-slate-500">Syncing...</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content: Chat Interface -->
+<main class="flex-1 flex flex-col relative bg-surface-container-lowest">
+<!-- Chat Header -->
+<header class="h-16 flex items-center justify-between px-8 border-b border-white/5 bg-surface-container-low/50 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<span class="text-primary material-symbols-outlined">auto_awesome</span>
+<h2 class="font-headline font-bold text-lg tracking-tight">AI Dialogue</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-400 hover:text-on-surface transition-colors p-2 rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined">history</span>
+</button>
+<button class="text-slate-400 hover:text-on-surface transition-colors p-2 rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Chat Canvas -->
+<div class="flex-1 overflow-y-auto px-6 py-10 flex flex-col space-y-12 max-w-4xl mx-auto w-full">
+<!-- Initial Helper / Empty State (Subtle) -->
+<div class="text-center space-y-4 mb-8 opacity-40">
+<span class="material-symbols-outlined text-4xl text-primary-fixed-dim">psychology</span>
+<p class="text-sm font-label uppercase tracking-[0.2em] text-on-surface-variant">Deep Knowledge Search Active</p>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end w-full max-w-2xl ml-auto">
+<div class="bg-surface-container-high px-6 py-4 rounded-2xl rounded-tr-none text-on-surface leading-relaxed shadow-sm">
+                        How does the concept of "Cognitive Sanctuary" relate to my previous notes on digital minimalism?
+                    </div>
+<span class="text-[10px] text-slate-500 mt-2 font-medium uppercase tracking-widest mr-2">Sent 2m ago</span>
+</div>
+<!-- AI Response -->
+<div class="flex flex-col items-start w-full max-w-3xl mr-auto space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0 mt-1 border border-secondary/20 shadow-[0_0_15px_rgba(214,186,255,0.15)]">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="shimmer-accent bg-tertiary-container/10 px-8 py-6 rounded-3xl space-y-4">
+<p class="text-on-surface leading-relaxed font-body">
+                                Based on your 14 entries regarding <span class="text-tertiary font-semibold">Digital Minimalism</span>, the "Cognitive Sanctuary" serves as the architectural manifestation of your theory. 
+                                <br/><br/>
+                                While your notes focus on *reducing* noise (minimalism), the Sanctuary emphasizes the *curation* of signal. You previously noted that "silence isn't enough; we need structured quiet." This system provides that structure by layering information tonally, reducing the cognitive load of decision-making.
+                            </p>
+<!-- Sources / Pills -->
+<div class="pt-4 border-t border-white/5">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-3">Linked Sources</p>
+<div class="flex flex-wrap gap-2">
+<button class="bg-surface-container-highest hover:bg-surface-bright transition-colors px-3 py-1.5 rounded-full flex items-center gap-2 text-xs text-secondary border border-outline-variant/20">
+<span class="material-symbols-outlined text-[14px]">article</span>
+                                        Note: Digital Friction (Oct 22)
+                                    </button>
+<button class="bg-surface-container-highest hover:bg-surface-bright transition-colors px-3 py-1.5 rounded-full flex items-center gap-2 text-xs text-secondary border border-outline-variant/20">
+<span class="material-symbols-outlined text-[14px]">link</span>
+                                        Archive: Cal Newport Insights
+                                    </button>
+<button class="bg-surface-container-highest hover:bg-surface-bright transition-colors px-3 py-1.5 rounded-full flex items-center gap-2 text-xs text-secondary border border-outline-variant/20">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+                                        Draft: The Quiet Mind
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Spacer for bottom bar -->
+<div class="h-24"></div>
+</div>
+<!-- Input Area: The "Glass" Input -->
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/90 to-transparent">
+<div class="max-w-4xl mx-auto relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur opacity-30 group-focus-within:opacity-60 transition duration-500"></div>
+<div class="relative bg-surface-container-low border border-outline-variant/10 rounded-2xl flex items-end p-2 pr-4 shadow-2xl">
+<div class="p-3 text-slate-500">
+<span class="material-symbols-outlined">attachment</span>
+</div>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-3 resize-none font-body leading-normal" placeholder="Ask about your knowledge..." rows="1"></textarea>
+<div class="flex items-center gap-3 py-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+</div>
+<div class="flex justify-between mt-3 px-2">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5 text-[10px] text-slate-500 uppercase tracking-tighter">
+<span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+                                Engine Ready
+                            </span>
+<span class="flex items-center gap-1.5 text-[10px] text-slate-500 uppercase tracking-tighter">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                                Encrypted
+                            </span>
+</div>
+<span class="text-[10px] text-slate-600 font-label">Press ⌘ + Enter to send</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

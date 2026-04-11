@@ -82,6 +82,13 @@ def save_page(processed_data: Dict[str, Any]) -> Dict[str, str]:
     """
     documents_collection, chunks_collection = get_collections()
 
+    # --- Duplicate Check ---
+    url = processed_data.get("url", "")
+    existing = documents_collection.get(where={"url": url})
+    if existing and existing["ids"]:
+        print(f"[STORE] Skipping duplicate — URL already saved: {url}")
+        return {"status": "duplicate", "message": "Page already saved", "url": url}
+
     document_id = str(uuid.uuid4())
 
     # --- Extract fields from processed data ---
